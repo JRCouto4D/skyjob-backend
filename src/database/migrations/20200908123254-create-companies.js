@@ -29,7 +29,7 @@ module.exports = {
       },
       access: {
         type: Sequelize.BOOLEAN,
-        default: true,
+        defaultValue: true,
         allowNull: false,
       },
       created_at: {
