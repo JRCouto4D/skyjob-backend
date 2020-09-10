@@ -16,6 +16,12 @@ import SessionController from './app/controllers/SessionControllers';
 import FileController from './app/controllers/FileController';
 import CompanyController from './app/controllers/CompanyController';
 
+/**
+ * Controllers admin
+ */
+
+import CompanyControllerAdmin from './app/controllers/Admin/CompanyControllerAdmin';
+
 const routes = new Router();
 const upload = multer(multerConfig);
 
@@ -28,7 +34,15 @@ routes.use(authMiddleware);
  */
 
 routes.post('/files', upload.single('file'), FileController.store);
-routes.post('/companies', CompanyController.store);
 routes.put('/companies', CompanyController.update);
+
+/**
+ * Rotas autenticadas de nível admin
+ */
+
+routes.post('/skyjob/companies', CompanyControllerAdmin.store);
+routes.put('/skyjob/companies/:company_id', CompanyControllerAdmin.update);
+routes.delete('/skyjob/companies/:company_id', CompanyControllerAdmin.delete);
+routes.get('/skyjob/companies', CompanyControllerAdmin.index);
 
 export default routes;

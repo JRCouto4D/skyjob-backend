@@ -26,7 +26,7 @@ class SessionController {
       return res.status(401).json({ error: 'Senha incorreta' });
     }
 
-    const { id, description, access } = company;
+    const { id, description, access, admin } = company;
 
     if (!access) {
       return res.status(401).json({ error: 'Acesso negado para esta empresa' });
@@ -37,6 +37,7 @@ class SessionController {
         id,
         description,
         email,
+        admin,
       },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,

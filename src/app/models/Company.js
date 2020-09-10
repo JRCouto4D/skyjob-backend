@@ -10,6 +10,7 @@ class Company extends Model {
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         access: Sequelize.BOOLEAN,
+        admin: Sequelize.BOOLEAN,
       },
       {
         sequelize,
