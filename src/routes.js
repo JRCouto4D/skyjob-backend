@@ -21,6 +21,7 @@ import CompanyController from './app/controllers/CompanyController';
  */
 
 import CompanyControllerAdmin from './app/controllers/Admin/CompanyControllerAdmin';
+import StartContract from './app/controllers/Admin/Contracts/StartContract';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -44,5 +45,7 @@ routes.post('/skyjob/companies', CompanyControllerAdmin.store);
 routes.put('/skyjob/companies/:company_id', CompanyControllerAdmin.update);
 routes.delete('/skyjob/companies/:company_id', CompanyControllerAdmin.delete);
 routes.get('/skyjob/companies', CompanyControllerAdmin.index);
+
+routes.post('/skyjob/contracts/start', StartContract.store);
 
 export default routes;
