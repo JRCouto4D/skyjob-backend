@@ -8,6 +8,7 @@ module.exports = {
         email: 'skyjob@email.com',
         password_hash: bcrypt.hashSync('123456', 8),
         access: true,
+        admin: true,
         created_at: new Date(),
         updated_at: new Date(),
       },
