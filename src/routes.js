@@ -15,11 +15,14 @@ import authMiddleware from './app/middlewares/auth';
 import SessionController from './app/controllers/SessionControllers';
 import FileController from './app/controllers/FileController';
 import CompanyController from './app/controllers/CompanyController';
+import UserLevel1Controller from './app/controllers/Companies/AccessLevel_1/UserController';
+import UserLevel2Controller from './app/controllers/Companies/AccessLevel_2/UserController';
 
 /**
  * Controllers admin
  */
 
+import SessionAdminController from './app/controllers/Admin/SessionAdminControllers';
 import ContractController from './app/controllers/Admin/Contracts/ContractController';
 import CompanyControllerAdmin from './app/controllers/Admin/CompanyControllerAdmin';
 import StartContract from './app/controllers/Admin/Contracts/StartContract';
@@ -28,6 +31,7 @@ import CancelContract from './app/controllers/Admin/Contracts/CancelContract';
 const routes = new Router();
 const upload = multer(multerConfig);
 
+routes.post('/session/admin', SessionAdminController.store);
 routes.post('/session/companies', SessionController.store);
 
 routes.use(authMiddleware);
@@ -38,6 +42,22 @@ routes.use(authMiddleware);
 
 routes.post('/files', upload.single('file'), FileController.store);
 routes.put('/companies', CompanyController.update);
+
+/**
+ * Rotas autenticadas com nível de acesso 2
+ */
+
+routes.post('/users', UserLevel2Controller.store);
+routes.put('/users/:user_id/update', UserLevel2Controller.update);
+routes.delete('/users/:user_id/delete', UserLevel2Controller.delete);
+routes.get('/users/company/:company_id', UserLevel2Controller.index);
+routes.get('/users/company/:company_id/list', UserLevel2Controller.show);
+
+/**
+ * Rotas autenticadas com nível de acesso 1
+ */
+
+routes.put('/users/update', UserLevel1Controller.update);
 
 /**
  * Rotas autenticadas de nível admin
