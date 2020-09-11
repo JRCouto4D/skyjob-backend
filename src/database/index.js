@@ -4,10 +4,11 @@ import Company from '../app/models/Company';
 import Contract from '../app/models/Contract';
 import User from '../app/models/User';
 import Unit from '../app/models/Unit';
+import Category from '../app/models/Category';
 
 import databaseConfig from '../config/database';
 
-const models = [File, Company, Contract, User, Unit];
+const models = [File, Company, Contract, User, Unit, Category];
 
 class DataBase {
   constructor() {

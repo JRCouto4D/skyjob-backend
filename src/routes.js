@@ -18,6 +18,7 @@ import CompanyController from './app/controllers/CompanyController';
 import UserLevel1Controller from './app/controllers/Companies/AccessLevel_1/UserController';
 import UserLevel2Controller from './app/controllers/Companies/AccessLevel_2/UserController';
 import UnitController from './app/controllers/Companies/AccessLevel_2/UnitController';
+import CategoryController from './app/controllers/Companies/AccessLevel_2/CategoryController';
 
 /**
  * Controllers admin
@@ -61,6 +62,18 @@ routes.delete(
   UnitController.delete
 );
 routes.get('/company/:company_id/units', UnitController.index);
+
+routes.post('/company/:company_id/categories', CategoryController.store);
+routes.put(
+  '/company/:company_id/categories/:category_id/update',
+  CategoryController.update
+);
+routes.delete(
+  '/company/:company_id/categories/:category_id/delete',
+  CategoryController.delete
+);
+routes.get('/company/:company_id/categories', CategoryController.index);
+routes.get('/company/:company_id/categories/list', CategoryController.show);
 
 /**
  * Rotas autenticadas com nível de acesso 1
