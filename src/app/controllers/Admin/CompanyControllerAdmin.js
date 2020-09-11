@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import Company from '../../models/Company';
+import User from '../../models/User';
 import File from '../../models/File';
 
 class CompanyControllers {
@@ -35,6 +36,16 @@ class CompanyControllers {
     }
 
     const company = await Company.create(req.body);
+
+    if (company.id) {
+      await User.create({
+        company_id: company.id,
+        name: 'admin',
+        email: company.email,
+        password: req.body.password,
+        access_level: 2,
+      });
+    }
 
     return res.json(company);
   }
