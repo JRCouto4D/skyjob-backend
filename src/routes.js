@@ -17,6 +17,7 @@ import FileController from './app/controllers/FileController';
 import CompanyController from './app/controllers/CompanyController';
 import UserLevel1Controller from './app/controllers/Companies/AccessLevel_1/UserController';
 import UserLevel2Controller from './app/controllers/Companies/AccessLevel_2/UserController';
+import UnitController from './app/controllers/Companies/AccessLevel_2/UnitController';
 
 /**
  * Controllers admin
@@ -52,6 +53,14 @@ routes.put('/users/:user_id/update', UserLevel2Controller.update);
 routes.delete('/users/:user_id/delete', UserLevel2Controller.delete);
 routes.get('/users/company/:company_id', UserLevel2Controller.index);
 routes.get('/users/company/:company_id/list', UserLevel2Controller.show);
+
+routes.post('/company/:company_id/units', UnitController.store);
+routes.put('/company/:company_id/units/:unit_id/update', UnitController.update);
+routes.delete(
+  '/company/:company_id/units/:unit_id/delete',
+  UnitController.delete
+);
+routes.get('/company/:company_id/units', UnitController.index);
 
 /**
  * Rotas autenticadas com nível de acesso 1
