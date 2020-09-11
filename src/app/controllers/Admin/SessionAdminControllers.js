@@ -1,9 +1,7 @@
 import * as Yup from 'yup';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
-import Company from '../models/Company';
-import File from '../models/File';
-import authConfig from '../../config/auth';
+import Company from '../../models/Company';
+import authConfig from '../../../config/auth';
 
 class SessionController {
   async store(req, res) {
@@ -18,43 +16,32 @@ class SessionController {
 
     const { email, password } = req.body;
 
-    const user = await User.findOne({
-      where: { email },
-      include: [
-        {
-          model: Company,
-          as: 'company',
-          attributes: ['id', 'description', 'access'],
-        },
-        {
-          model: File,
-          as: 'avatar',
-          attributes: ['name', 'path', 'url'],
-        },
-      ],
-    });
+    const company = await Company.findOne({ where: { email } });
 
-    if (!user) {
+    if (!company) {
       return res.status(401).json({ error: 'Usuário não registrado' });
     }
 
-    if (!(await user.checkPassword(password))) {
+    if (!company.admin) {
+      return res.status(401).json({ error: 'Acesso negado' });
+    }
+
+    if (!(await company.checkPassword(password))) {
       return res.status(401).json({ error: 'Senha incorreta' });
     }
 
-    const { id, name, company, access_level, avatar } = user;
+    const { id, description, access, admin } = company;
 
-    if (!company.access) {
+    if (!access) {
       return res.status(401).json({ error: 'Acesso negado para esta empresa' });
     }
 
     return res.json({
       user: {
         id,
-        name,
-        access_level,
-        company,
-        avatar,
+        description,
+        email,
+        admin,
       },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
