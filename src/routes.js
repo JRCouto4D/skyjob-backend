@@ -20,6 +20,7 @@ import UserLevel2Controller from './app/controllers/Companies/AccessLevel_2/User
 import UnitController from './app/controllers/Companies/AccessLevel_2/UnitController';
 import CategoryController from './app/controllers/Companies/AccessLevel_2/CategoryController';
 import ProviderController from './app/controllers/Companies/AccessLevel_2/ProviderController';
+import ProductController from './app/controllers/Companies/AccessLevel_2/ProductController';
 
 /**
  * Controllers admin
@@ -50,12 +51,19 @@ routes.put('/companies', CompanyController.update);
  * Rotas autenticadas com nível de acesso 2
  */
 
+/**
+ * Users
+ */
+
 routes.post('/users', UserLevel2Controller.store);
 routes.put('/users/:user_id/update', UserLevel2Controller.update);
 routes.delete('/users/:user_id/delete', UserLevel2Controller.delete);
 routes.get('/users/company/:company_id', UserLevel2Controller.index);
 routes.get('/users/company/:company_id/list', UserLevel2Controller.show);
 
+/**
+ * Companies/units
+ */
 routes.post('/company/:company_id/units', UnitController.store);
 routes.put('/company/:company_id/units/:unit_id/update', UnitController.update);
 routes.delete(
@@ -63,6 +71,10 @@ routes.delete(
   UnitController.delete
 );
 routes.get('/company/:company_id/units', UnitController.index);
+
+/**
+ * Categories
+ */
 
 routes.post('/company/:company_id/categories', CategoryController.store);
 routes.put(
@@ -76,6 +88,10 @@ routes.delete(
 routes.get('/company/:company_id/categories', CategoryController.index);
 routes.get('/company/:company_id/categories/list', CategoryController.show);
 
+/**
+ * Providers
+ */
+
 routes.post('/company/:company_id/providers', ProviderController.store);
 routes.put(
   '/company/:company_id/providers/:provider_id/update',
@@ -87,6 +103,22 @@ routes.delete(
 );
 routes.get('/company/:company_id/providers', ProviderController.index);
 routes.get('/company/:company_id/providers/list', ProviderController.show);
+
+/**
+ * Products
+ */
+
+routes.post('/company/:company_id/products', ProductController.store);
+routes.put(
+  '/company/:company_id/products/:product_id/update',
+  ProductController.update
+);
+routes.delete(
+  '/company/:company_id/products/:product_id/delete',
+  ProductController.delete
+);
+routes.get('/company/:company_id/products', ProductController.index);
+routes.get('/company/:company_id/products/list', ProductController.show);
 
 /**
  * Rotas autenticadas com nível de acesso 1
