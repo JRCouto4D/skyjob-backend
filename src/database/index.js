@@ -6,10 +6,20 @@ import User from '../app/models/User';
 import Unit from '../app/models/Unit';
 import Category from '../app/models/Category';
 import Provider from '../app/models/Provider';
+import Product from '../app/models/Product';
 
 import databaseConfig from '../config/database';
 
-const models = [File, Company, Contract, User, Unit, Category, Provider];
+const models = [
+  File,
+  Company,
+  Contract,
+  User,
+  Unit,
+  Category,
+  Provider,
+  Product,
+];
 
 class DataBase {
   constructor() {
