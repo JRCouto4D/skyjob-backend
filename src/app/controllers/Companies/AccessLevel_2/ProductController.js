@@ -16,8 +16,13 @@ class ProductController {
       image_id: Yup.number(),
       cust_price: Yup.number(),
       retail_price: Yup.number().required(),
-      wholesale_sale: Yup.number(),
-      minimum_wholesale: Yup.number(),
+      wholesale: Yup.boolean(),
+      wholesale_price: Yup.number().when('wholesale', (wholesale, field) =>
+        wholesale ? field.required() : field
+      ),
+      minimum_wholesale: Yup.number().when('wholesale', (wholesale, field) =>
+        wholesale ? field.required() : field
+      ),
       minimum_stock: Yup.number().required(),
     });
 
