@@ -7,6 +7,7 @@ import Unit from '../app/models/Unit';
 import Category from '../app/models/Category';
 import Provider from '../app/models/Provider';
 import Product from '../app/models/Product';
+import Cash_register from '../app/models/Cash_register';
 
 import databaseConfig from '../config/database';
 
@@ -19,6 +20,7 @@ const models = [
   Category,
   Provider,
   Product,
+  Cash_register,
 ];
 
 class DataBase {
