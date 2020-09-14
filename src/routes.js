@@ -21,6 +21,7 @@ import UnitController from './app/controllers/Companies/AccessLevel_2/UnitContro
 import CategoryController from './app/controllers/Companies/AccessLevel_2/CategoryController';
 import ProviderController from './app/controllers/Companies/AccessLevel_2/ProviderController';
 import ProductController from './app/controllers/Companies/AccessLevel_2/ProductController';
+import CashController from './app/controllers/Companies/AccessLevel_2/CashController';
 
 /**
  * Controllers admin
@@ -119,6 +120,21 @@ routes.delete(
 );
 routes.get('/company/:company_id/products', ProductController.index);
 routes.get('/company/:company_id/products/list', ProductController.show);
+
+/**
+ * Cash_registers
+ */
+
+routes.post('/company/:company_id/cash_registers', CashController.store);
+routes.put(
+  '/company/:company_id/cash_registers/:cash_register_id/update',
+  CashController.update
+);
+routes.delete(
+  '/company/:company_id/cash_registers/:cash_register_id/delete',
+  CashController.delete
+);
+routes.get('/company/:company_id/cash_registers', CashController.index);
 
 /**
  * Rotas autenticadas com nível de acesso 1
