@@ -24,6 +24,15 @@ import ProductController from './app/controllers/Companies/AccessLevel_2/Product
 import CashController from './app/controllers/Companies/AccessLevel_2/CashController';
 
 /**
+ * Controllers Point_sales
+ */
+
+import Start_point_sale from './app/controllers/Point_sales/Start_point_sale';
+import Close_point_sale from './app/controllers/Point_sales/Close_point_sale';
+import ReinforcementController from './app/controllers/Companies/AccessLevel_2/ReinforcementController';
+import BleedController from './app/controllers/Companies/AccessLevel_2/BleedController';
+
+/**
  * Controllers admin
  */
 
@@ -135,6 +144,15 @@ routes.delete(
   CashController.delete
 );
 routes.get('/company/:company_id/cash_registers', CashController.index);
+
+/**
+ * Rotas relacionadas ao point_sale
+ */
+
+routes.post('/point_sales/start', Start_point_sale.store);
+routes.put('/point_sales/:point_sale_id/close', Close_point_sale.update);
+routes.post('/point_sales/reinforcement', ReinforcementController.store);
+routes.post('/point_sales/bleed', BleedController.store);
 
 /**
  * Rotas autenticadas com nível de acesso 1
