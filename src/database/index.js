@@ -8,6 +8,9 @@ import Category from '../app/models/Category';
 import Provider from '../app/models/Provider';
 import Product from '../app/models/Product';
 import Cash_register from '../app/models/Cash_register';
+import Point_sale from '../app/models/Point_sale';
+import Reinforcements from '../app/models/Reinforcement';
+import Bleed from '../app/models/Bleed';
 
 import databaseConfig from '../config/database';
 
@@ -21,6 +24,9 @@ const models = [
   Provider,
   Product,
   Cash_register,
+  Point_sale,
+  Reinforcements,
+  Bleed,
 ];
 
 class DataBase {
