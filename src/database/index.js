@@ -11,6 +11,8 @@ import Cash_register from '../app/models/Cash_register';
 import Point_sale from '../app/models/Point_sale';
 import Reinforcements from '../app/models/Reinforcement';
 import Bleed from '../app/models/Bleed';
+import Sale from '../app/models/Sale';
+import Item from '../app/models/Item';
 
 import databaseConfig from '../config/database';
 
@@ -27,6 +29,8 @@ const models = [
   Point_sale,
   Reinforcements,
   Bleed,
+  Sale,
+  Item,
 ];
 
 class DataBase {
