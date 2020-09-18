@@ -39,6 +39,8 @@ import UpdateItem from './app/controllers/Sales/Itens/UpdateItem';
 import RemoveItem from './app/controllers/Sales/Itens/RemoveItem';
 import ListSales from './app/controllers/Sales/List_sales';
 
+import Return_sale from './app/controllers/Sales/Return_sale';
+
 /**
  * Controllers admin
  */
@@ -168,6 +170,11 @@ routes.post('/addItem/sale/:sale_id/product/:product_id', AddItem.store);
 routes.put('/updateItem/:item_id', UpdateItem.update);
 routes.delete('/removeItem/:item_id', RemoveItem.delete);
 routes.get('/point_sales/:point_sale_id/sales', ListSales.index);
+
+routes.post(
+  '/point_sales/:point_sale_id/return/sales/:sale_id',
+  Return_sale.store
+);
 
 /**
  * Rotas autenticadas com nível de acesso 1

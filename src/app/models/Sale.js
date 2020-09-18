@@ -9,6 +9,7 @@ class Sale extends Model {
         installments: Sequelize.INTEGER,
         total: Sequelize.DOUBLE,
         complete_at: Sequelize.DATE,
+        canceled_at: Sequelize.DATE,
       },
       {
         sequelize,

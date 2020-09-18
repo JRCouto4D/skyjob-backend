@@ -13,6 +13,7 @@ import Reinforcements from '../app/models/Reinforcement';
 import Bleed from '../app/models/Bleed';
 import Sale from '../app/models/Sale';
 import Item from '../app/models/Item';
+import Return from '../app/models/Return';
 
 import databaseConfig from '../config/database';
 
@@ -31,6 +32,7 @@ const models = [
   Bleed,
   Sale,
   Item,
+  Return,
 ];
 
 class DataBase {
