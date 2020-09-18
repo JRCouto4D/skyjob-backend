@@ -32,6 +32,12 @@ import Close_point_sale from './app/controllers/Point_sales/Close_point_sale';
 import ReinforcementController from './app/controllers/Companies/AccessLevel_2/ReinforcementController';
 import BleedController from './app/controllers/Companies/AccessLevel_2/BleedController';
 
+import StartSale from './app/controllers/Sales/Start_sale';
+import CompleteSale from './app/controllers/Sales/Complete_sale';
+import AddItem from './app/controllers/Sales/Itens/AddItem';
+import UpdateItem from './app/controllers/Sales/Itens/UpdateItem';
+import RemoveItem from './app/controllers/Sales/Itens/RemoveItem';
+
 /**
  * Controllers admin
  */
@@ -150,9 +156,16 @@ routes.get('/company/:company_id/cash_registers', CashController.index);
  */
 
 routes.post('/point_sales/start', Start_point_sale.store);
+
 routes.put('/point_sales/:point_sale_id/close', Close_point_sale.update);
 routes.post('/point_sales/reinforcement', ReinforcementController.store);
 routes.post('/point_sales/bleed', BleedController.store);
+
+routes.post('/point_sales/:point_sale_id/sale/start', StartSale.store);
+routes.put('/sale/:sale_id/complete', CompleteSale.update);
+routes.post('/addItem/sale/:sale_id/product/:product_id', AddItem.store);
+routes.put('/updateItem/:item_id', UpdateItem.update);
+routes.delete('/removeItem/:item_id', RemoveItem.delete);
 
 /**
  * Rotas autenticadas com nível de acesso 1
