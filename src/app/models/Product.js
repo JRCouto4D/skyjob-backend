@@ -12,6 +12,7 @@ class Product extends Model {
         minimum_stock: Sequelize.INTEGER,
         active: Sequelize.BOOLEAN,
         wholesale: Sequelize.BOOLEAN,
+        amount_stock: Sequelize.INTEGER,
       },
       {
         sequelize,
