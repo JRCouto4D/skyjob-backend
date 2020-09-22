@@ -22,6 +22,7 @@ import CategoryController from './app/controllers/Companies/AccessLevel_2/Catego
 import ProviderController from './app/controllers/Companies/AccessLevel_2/ProviderController';
 import ProductController from './app/controllers/Companies/AccessLevel_2/ProductController';
 import CashController from './app/controllers/Companies/AccessLevel_2/CashController';
+import CustomerController from './app/controllers/Companies/AccessLevel_2/CustomerController';
 
 /**
  * Controllers Point_sales
@@ -138,6 +139,22 @@ routes.delete(
 );
 routes.get('/company/:company_id/products', ProductController.index);
 routes.get('/company/:company_id/products/list', ProductController.show);
+
+/**
+ * Customers
+ */
+
+routes.post('/company/:company_id/customers', CustomerController.store);
+routes.put(
+  '/company/:company_id/customers/:customer_id',
+  CustomerController.update
+);
+routes.delete(
+  '/company/:company_id/customers/:customer_id',
+  CustomerController.delete
+);
+routes.get('/company/:company_id/customers', CustomerController.index);
+routes.get('/company/:company_id/customers/list', CustomerController.show);
 
 /**
  * Cash_registers

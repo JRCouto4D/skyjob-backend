@@ -14,6 +14,7 @@ import Bleed from '../app/models/Bleed';
 import Sale from '../app/models/Sale';
 import Item from '../app/models/Item';
 import Return from '../app/models/Return';
+import Customer from '../app/models/Customer';
 
 import databaseConfig from '../config/database';
 
@@ -33,6 +34,7 @@ const models = [
   Sale,
   Item,
   Return,
+  Customer,
 ];
 
 class DataBase {
