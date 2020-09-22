@@ -41,6 +41,7 @@ import RemoveItem from './app/controllers/Sales/Itens/RemoveItem';
 import ListSales from './app/controllers/Sales/List_sales';
 
 import Return_sale from './app/controllers/Sales/Return_sale';
+import ResetSale from './app/controllers/Sales/Reset_sales';
 
 /**
  * Controllers admin
@@ -191,6 +192,10 @@ routes.get('/point_sales/:point_sale_id/sales', ListSales.index);
 routes.post(
   '/point_sales/:point_sale_id/return/sales/:sale_id',
   Return_sale.store
+);
+routes.delete(
+  '/company/:company_id/point_sales/:point_sale_id',
+  ResetSale.delete
 );
 
 /**
