@@ -24,6 +24,10 @@ class Sale extends Model {
       foreignKey: 'point_sale_id',
       as: 'point_sale',
     });
+    this.belongsTo(models.Customer, {
+      foreignKey: 'customer_id',
+      as: 'customer',
+    });
   }
 }
 
