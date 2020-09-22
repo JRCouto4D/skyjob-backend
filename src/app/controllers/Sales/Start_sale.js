@@ -1,11 +1,15 @@
 import * as Yup from 'yup';
 import Sale from '../../models/Sale';
 import Point from '../../models/Point_sale';
+import Customer from '../../models/Customer';
 
 class Start_sale {
   async store(req, res) {
     const schema = Yup.object().shape({
       type_sale: Yup.number().required(),
+      customer_id: Yup.number().when('type_sale', (type_sale, field) =>
+        type_sale === 2 ? field.required() : field
+      ),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -13,6 +17,7 @@ class Start_sale {
     }
 
     const { point_sale_id } = req.params;
+    const { type_sale, customer_id } = req.body;
 
     const point_sale = await Point.findByPk(point_sale_id);
 
@@ -35,6 +40,20 @@ class Start_sale {
       return res
         .status(401)
         .json({ error: 'Este ponto de venda tem uma operação inacabada' });
+    }
+
+    if (type_sale === 2) {
+      const checkCustomer = await Customer.findByPk(customer_id);
+
+      if (!checkCustomer) {
+        return res.status(401).json({ error: 'Cliente não encontrado' });
+      }
+
+      if (!checkCustomer.wholesale) {
+        return res.status(401).json({
+          error: 'Este usuário não está autorizado para compras em atacado',
+        });
+      }
     }
 
     const data = { point_sale_id: point_sale.id, ...req.body };
