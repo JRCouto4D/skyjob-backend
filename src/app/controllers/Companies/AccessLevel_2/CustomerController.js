@@ -24,13 +24,14 @@ class CustomerController {
       complement: Yup.string(),
       city: Yup.string(),
       state: Yup.string(),
+      wholesale: Yup.boolean(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Dados inválidos' });
     }
 
-    const { type, email, cpf, cnpj } = req.body;
+    const { type, email, cpf, cnpj, wholesale } = req.body;
     const { company_id } = req.params;
 
     if (email) {
@@ -63,14 +64,17 @@ class CustomerController {
       }
     }
 
-    if (type === 2) {
+    if (type === 2 || wholesale) {
       const checkUser = await User.findByPk(req.companyId);
 
       if (!checkUser) {
         return res.status(401).json({ error: 'Usuário não encontrado' });
       }
 
-      if (checkUser.access_level < 2 && checkUser.company_id !== company_id) {
+      if (
+        checkUser.access_level < 2 ||
+        checkUser.company_id !== Number(company_id)
+      ) {
         return res.status(401).json({ error: 'Operação não autorizada' });
       }
 
@@ -109,6 +113,7 @@ class CustomerController {
       complement: Yup.string(),
       city: Yup.string(),
       state: Yup.string(),
+      wholesale: Yup.boolean(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -164,21 +169,26 @@ class CustomerController {
           return res.status(401).json({ error: 'Usuário não encontrado' });
         }
 
-        if (checkUser.access_level < 2 && checkUser.company_id !== company_id) {
+        if (
+          checkUser.access_level < 2 ||
+          checkUser.company_id !== Number(company_id)
+        ) {
           return res.status(401).json({ error: 'Operação não autorizada' });
         }
 
-        const checkCnpj = await Customer.findOne({
-          where: {
-            company_id,
-            cnpj,
-          },
-        });
+        if (cnpj) {
+          const checkCnpj = await Customer.findOne({
+            where: {
+              company_id,
+              cnpj,
+            },
+          });
 
-        if (checkCnpj) {
-          return res
-            .status(401)
-            .json({ error: 'Esta empresa já possui cadastro no sistema' });
+          if (checkCnpj) {
+            return res
+              .status(401)
+              .json({ error: 'Esta empresa já possui cadastro no sistema' });
+          }
         }
       }
     }
