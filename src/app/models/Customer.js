@@ -18,6 +18,7 @@ class Customer extends Model {
         city: Sequelize.STRING,
         state: Sequelize.STRING,
         active: Sequelize.BOOLEAN,
+        wholesale: Sequelize.BOOLEAN,
       },
       {
         sequelize,
