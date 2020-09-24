@@ -29,6 +29,10 @@ class Item_invoiceController {
 
     const invoice = await Invoice.findByPk(invoice_id);
 
+    if (!invoice) {
+      return res.status(401).json({ error: 'Nota não encotrada' });
+    }
+
     if (invoice.included_at !== null || invoice.reversed_at !== null) {
       return res.status(401).json({ error: 'Operação não autorizada' });
     }
