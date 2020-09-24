@@ -15,6 +15,8 @@ import Sale from '../app/models/Sale';
 import Item from '../app/models/Item';
 import Return from '../app/models/Return';
 import Customer from '../app/models/Customer';
+import Invoice from '../app/models/Invoice';
+import Invoice_item from '../app/models/Invoice_item';
 
 import databaseConfig from '../config/database';
 
@@ -35,6 +37,8 @@ const models = [
   Item,
   Return,
   Customer,
+  Invoice,
+  Invoice_item,
 ];
 
 class DataBase {

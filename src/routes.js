@@ -23,6 +23,12 @@ import ProviderController from './app/controllers/Companies/AccessLevel_2/Provid
 import ProductController from './app/controllers/Companies/AccessLevel_2/ProductController';
 import CashController from './app/controllers/Companies/AccessLevel_2/CashController';
 import CustomerController from './app/controllers/Companies/AccessLevel_2/CustomerController';
+import StartInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/Start_Invoice';
+import Item_invoiceController from './app/controllers/Companies/AccessLevel_2/Invoices/Itens_Invoice/Item_invoiceControllers';
+import IncludeInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/IncludeInvoice';
+import ReversedInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/ReverseInvoice';
+import ListInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/ListInvoice';
+import DeleteInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/DeleteInvoice';
 
 /**
  * Controllers Point_sales
@@ -140,6 +146,31 @@ routes.delete(
 );
 routes.get('/company/:company_id/products', ProductController.index);
 routes.get('/company/:company_id/products/list', ProductController.show);
+
+/**
+ * Invoices
+ */
+
+routes.post('/company/:company_id/invoices/start', StartInvoice.store);
+routes.put('/invoice/:invoice_id/include', IncludeInvoice.update);
+routes.put('/invoice/:invoice_id/reverse', ReversedInvoice.update);
+routes.delete('/invoice/:invoice_id/delete', DeleteInvoice.delete);
+routes.get('/company/:company_id/invoice/list', ListInvoice.index);
+routes.get('/company/:company_id/invoice/filter', ListInvoice.show);
+
+routes.post(
+  '/addItem/invoice/:invoice_id/product/:product_id',
+  Item_invoiceController.store
+);
+routes.put(
+  '/invoice/:invoice_id/item/:item_id/update',
+  Item_invoiceController.update
+);
+routes.delete(
+  '/invoice/:invoice_id/item/:item_id/delete',
+  Item_invoiceController.delete
+);
+routes.get('/invoice/:invoice_id/item/list', Item_invoiceController.show);
 
 /**
  * Customers
