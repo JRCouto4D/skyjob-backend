@@ -9,6 +9,7 @@ class AddItem {
   async store(req, res) {
     const schema = Yup.object().shape({
       amount: Yup.number().required(),
+      discount: Yup.number(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -16,7 +17,7 @@ class AddItem {
     }
 
     const { sale_id, product_id } = req.params;
-    const { amount } = req.body;
+    const { amount, discount } = req.body;
 
     const sale = await Sale.findByPk(sale_id, {
       include: [
@@ -73,24 +74,32 @@ class AddItem {
       return res.status(401).json({ error: 'Sem quantidade em estoque' });
     }
 
-    const dataItem = { sale_id, product_id, ...req.body };
+    const dataItem = {
+      sale_id,
+      product_id,
+      ...req.body,
+      total:
+        product.retail_price * req.body.amount -
+        product.retail_price * req.body.amount * (discount * 0.01),
+    };
 
     const item = await Item.create(dataItem);
 
     if (item.id) {
+      const valueDiscount = product.retail_price * amount * (discount * 0.01);
       if (sale.total === null) {
         const totalRetail =
           sale.type_sale === 1
-            ? product.retail_price * amount
-            : product.wholesale_price * amount;
+            ? product.retail_price * amount - valueDiscount
+            : product.wholesale_price * amount - valueDiscount;
 
         sale.total = totalRetail;
         await sale.save();
       } else {
         const totalWholesale =
           sale.type_sale === 1
-            ? sale.total + product.retail_price * amount
-            : sale.total + product.wholesale_price * amount;
+            ? sale.total + product.retail_price * amount - valueDiscount
+            : sale.total + product.wholesale_price * amount - valueDiscount;
 
         sale.total = totalWholesale;
         await sale.save();
@@ -99,7 +108,15 @@ class AddItem {
       await product.update({ amount_stock: product.amount_stock - amount });
     }
 
-    return res.json({ item, sale });
+    return res.json({
+      item,
+      sale: { id: sale.id, total: sale.total },
+      product: {
+        id: product.id,
+        description: product.description,
+        retail_price: product.retail_price,
+      },
+    });
   }
 }
 

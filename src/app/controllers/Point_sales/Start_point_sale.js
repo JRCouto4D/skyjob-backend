@@ -63,7 +63,26 @@ class Start_point_sale {
 
     const point_sale = await Point.create(req.body);
 
-    return res.json(point_sale);
+    if (point_sale.id) {
+      const pdv = await Point.findByPk(point_sale.id, {
+        include: [
+          {
+            model: Cash,
+            as: 'cash_register',
+            attributes: ['description'],
+          },
+          {
+            model: User,
+            as: 'user',
+            attributes: ['name'],
+          },
+        ],
+      });
+
+      return res.json(pdv);
+    }
+
+    return res.send();
   }
 }
 

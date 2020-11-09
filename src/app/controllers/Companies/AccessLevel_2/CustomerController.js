@@ -254,7 +254,7 @@ class CustomerController {
     const { page = 1, type = 0, name = '' } = req.query;
 
     const query =
-      type === 0
+      type === 0 || type === null || type === undefined
         ? { company_id, name: { [Op.iLike]: `${name}%` } }
         : { company_id, type, name: { [Op.iLike]: `${name}%` } };
 
@@ -264,8 +264,8 @@ class CustomerController {
 
     const customers = await Customer.findAll({
       where: query,
-      limit: 6,
-      offset: (page - 1) * 6,
+      limit: 5,
+      offset: (page - 1) * 5,
       order: [['name', 'ASC']],
       include: [
         {

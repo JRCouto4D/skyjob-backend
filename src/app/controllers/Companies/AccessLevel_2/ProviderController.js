@@ -104,6 +104,7 @@ class ProviderController {
         company_id,
       },
       attributes: [
+        'id',
         'name',
         'representative',
         'email',
@@ -133,6 +134,7 @@ class ProviderController {
         name: { [Op.iLike]: `${name}%` },
       },
       attributes: [
+        'id',
         'name',
         'representative',
         'email',
@@ -140,8 +142,8 @@ class ProviderController {
         'cell_phone',
         'active',
       ],
-      limit: 6,
-      offset: (page - 1) * 6,
+      limit: 5,
+      offset: (page - 1) * 5,
       order: [['name', 'ASC']],
     });
 
