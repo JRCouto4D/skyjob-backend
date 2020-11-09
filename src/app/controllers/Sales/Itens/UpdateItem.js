@@ -6,7 +6,8 @@ import Item from '../../../models/Item';
 class UpdateItem {
   async update(req, res) {
     const schema = Yup.object().shape({
-      amount: Yup.number(),
+      amount: Yup.number().required(),
+      discount: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -37,22 +38,39 @@ class UpdateItem {
       return res.status(401).json({ error: 'Produto não encontrado' });
     }
 
-    const { amount } = req.body;
+    const { amount, discount } = req.body;
 
     if (amount) {
       if (amount > product.amount_stock || product.amount_stock <= 0) {
         return res.status(401).json({ error: 'Sem quantidade em estoque' });
       }
       if (sale.type_sale === 1) {
-        const lowItem = sale.total - product.retail_price * item.amount;
-        const newItem = lowItem + product.retail_price * amount;
+        const lowItem = sale.total - item.total;
 
-        await sale.update({ total: newItem });
+        const discountValue = product.retail_price * amount * (discount * 0.01);
+
+        const grossAmount = product.retail_price * amount;
+
+        const netValue = grossAmount - discountValue;
+
+        const result = lowItem + netValue;
+
+        sale.total = result;
+        await sale.save();
       } else {
-        const lowItem = sale.total - product.wholesale_price * item.amount;
-        const newItem = lowItem + product.wholesale_price * amount;
+        const lowItem = sale.total - item.total;
 
-        await sale.update({ total: newItem });
+        const discountValue =
+          product.wholesale_price * amount * (discount * 0.01);
+
+        const grossAmount = product.wholesale_price * amount;
+
+        const netValue = grossAmount - discountValue;
+
+        const result = lowItem + netValue;
+
+        sale.total = result;
+        await sale.save();
       }
 
       await product.update({
@@ -60,9 +78,18 @@ class UpdateItem {
       });
     }
 
-    const updateItem = await item.update(req.body);
+    const dataItem = {
+      ...req.body,
+      total:
+        sale.type_sale === 1
+          ? product.retail_price * amount -
+            product.retail_price * amount * (discount * 0.01)
+          : product.wholesale_price * amount -
+            product.wholesale_price * amount * (discount * 0.01),
+    };
+    const updateItem = await item.update(dataItem);
 
-    return res.json(updateItem);
+    return res.json({ item: updateItem, sale });
   }
 }
 

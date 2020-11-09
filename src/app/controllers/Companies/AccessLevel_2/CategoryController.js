@@ -119,8 +119,8 @@ class CategoryController {
         company_id,
         name: { [Op.iLike]: `${name}%` },
       },
-      limit: 6,
-      offset: (page - 1) * 6,
+      limit: 5,
+      offset: (page - 1) * 5,
       order: [['name', 'ASC']],
     });
 

@@ -5,6 +5,8 @@ class Item extends Model {
     super.init(
       {
         amount: Sequelize.INTEGER,
+        discount: Sequelize.DOUBLE,
+        total: Sequelize.DOUBLE,
       },
       {
         sequelize,

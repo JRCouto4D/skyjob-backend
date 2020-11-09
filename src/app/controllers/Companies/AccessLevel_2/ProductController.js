@@ -212,7 +212,9 @@ class ProductController {
         'wholesale_price',
         'minimum_wholesale',
         'minimum_stock',
+        'wholesale',
         'active',
+        'amount_stock',
       ],
       include: [
         {
@@ -236,8 +238,8 @@ class ProductController {
           attributes: ['name', 'path', 'url'],
         },
       ],
-      limit: 6,
-      offset: (page - 1) * 6,
+      limit: 5,
+      offset: (page - 1) * 5,
       order: [['description', 'ASC']],
     });
 

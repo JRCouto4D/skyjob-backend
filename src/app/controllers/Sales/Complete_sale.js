@@ -8,6 +8,7 @@ class Complete_sale {
       installments: Yup.number().when('payment', (payment, field) =>
         payment === 2 ? field.required() : field
       ),
+      customer_id: Yup.number(),
     });
 
     if (!(await schema.isValid(req.body))) {

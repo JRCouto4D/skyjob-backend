@@ -28,15 +28,9 @@ class RemoveItem {
       return res.status(401).json({ error: 'Produto não encontrado' });
     }
 
-    if (sale.type_sale === 1) {
-      await sale.update({
-        total: sale.total - product.retail_price * item.amount,
-      });
-    } else {
-      await sale.update({
-        total: sale.total - product.wholesale_price * item.amount,
-      });
-    }
+    await sale.update({
+      total: sale.total - item.total,
+    });
 
     await product.update({ amount_stock: product.amount_stock + item.amount });
 
