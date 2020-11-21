@@ -51,6 +51,57 @@ class List_sales {
 
     return res.json({ sales, total });
   }
+
+  async show(req, res) {
+    const { point_sale_id } = req.params;
+    const total = await Sale.count({
+      where: {
+        point_sale_id,
+      },
+    });
+
+    const sales = await Sale.findAll({
+      where: {
+        point_sale_id,
+      },
+      attributes: [
+        'id',
+        'type_sale',
+        'total',
+        'payment',
+        'installments',
+        'complete_at',
+      ],
+      include: [
+        {
+          model: Point,
+          as: 'point_sale',
+          attributes: ['id'],
+          include: [
+            {
+              model: Cash,
+              as: 'cash_register',
+              attributes: ['id', 'description'],
+            },
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id', 'name', 'email', 'access_level', 'active'],
+              include: [
+                {
+                  model: File,
+                  as: 'avatar',
+                  attributes: ['name', 'path', 'url'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.json({ sales, total });
+  }
 }
 
 export default new List_sales();
