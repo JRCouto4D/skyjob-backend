@@ -219,6 +219,7 @@ routes.post('/addItem/sale/:sale_id/product/:product_id', AddItem.store);
 routes.put('/updateItem/:item_id', UpdateItem.update);
 routes.delete('/removeItem/:item_id', RemoveItem.delete);
 routes.get('/point_sales/:point_sale_id/sales', ListSales.index);
+routes.get('/point_sales/:point_sale_id/sales-list', ListSales.show);
 
 routes.post(
   '/point_sales/:point_sale_id/return/sales/:sale_id',
