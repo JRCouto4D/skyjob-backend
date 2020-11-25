@@ -6,6 +6,7 @@ import Point from '../../../models/Point_sale';
 class ReinforcementController {
   async store(req, res) {
     const schema = Yup.object().shape({
+      point_sale_id: Yup.number().required(),
       cash_value: Yup.number().required(),
     });
 
@@ -17,10 +18,6 @@ class ReinforcementController {
 
     if (!checkUser) {
       return res.status(401).json({ error: 'Usuário não encontrado' });
-    }
-
-    if (checkUser.access_level <= 1) {
-      return res.status(401).json({ error: 'Operação não autorizada' });
     }
 
     const { point_sale_id } = req.body;
@@ -45,7 +42,7 @@ class ReinforcementController {
 
     if (reinforcement.id) {
       point_sale.flow_value =
-        Number(point_sale.flow_value) + req.body.cash_value;
+        Number(point_sale.flow_value) + Number(req.body.cash_value);
 
       await point_sale.save();
     }
