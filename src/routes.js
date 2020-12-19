@@ -238,6 +238,7 @@ routes.delete(
 
 routes.get('/search/sale/:sale_id', SearchSale.show);
 routes.get('/sale/:sale_id/itens/list', ItensList.show);
+routes.get('/sale/:sale_id/itens/:product_id/list', ItensList.index);
 
 /**
  * Rotas autenticadas com nível de acesso 1
