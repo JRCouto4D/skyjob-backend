@@ -29,6 +29,7 @@ import IncludeInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/I
 import ReversedInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/ReverseInvoice';
 import ListInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/ListInvoice';
 import DeleteInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/DeleteInvoice';
+import Permission from './app/controllers/Permission';
 
 /**
  * Controllers Point_sales
@@ -38,16 +39,19 @@ import Start_point_sale from './app/controllers/Point_sales/Start_point_sale';
 import Close_point_sale from './app/controllers/Point_sales/Close_point_sale';
 import ReinforcementController from './app/controllers/Companies/AccessLevel_2/ReinforcementController';
 import BleedController from './app/controllers/Companies/AccessLevel_2/BleedController';
+import SearchPDV from './app/controllers/Point_sales/Search_point_sale';
 
 import StartSale from './app/controllers/Sales/Start_sale';
 import CompleteSale from './app/controllers/Sales/Complete_sale';
 import AddItem from './app/controllers/Sales/Itens/AddItem';
 import UpdateItem from './app/controllers/Sales/Itens/UpdateItem';
 import RemoveItem from './app/controllers/Sales/Itens/RemoveItem';
+import ItensList from './app/controllers/Sales/Itens/ItensList';
 import ListSales from './app/controllers/Sales/List_sales';
 
-import Return_sale from './app/controllers/Sales/Return_sale';
+import ReturnController from './app/controllers/Sales/ReturnController';
 import ResetSale from './app/controllers/Sales/Reset_sales';
+import SearchSale from './app/controllers/Sales/SearchSale';
 
 /**
  * Controllers admin
@@ -212,6 +216,7 @@ routes.post('/point_sales/start', Start_point_sale.store);
 routes.put('/point_sales/:point_sale_id/close', Close_point_sale.update);
 routes.post('/point_sales/reinforcement', ReinforcementController.store);
 routes.post('/point_sales/bleed', BleedController.store);
+routes.get('/point_sales/:pdv_id', SearchPDV.index);
 
 routes.post('/point_sales/:point_sale_id/sale/start', StartSale.store);
 routes.put('/sale/:sale_id/complete', CompleteSale.update);
@@ -223,12 +228,16 @@ routes.get('/point_sales/:point_sale_id/sales-list', ListSales.show);
 
 routes.post(
   '/point_sales/:point_sale_id/return/sales/:sale_id',
-  Return_sale.store
+  ReturnController.store
 );
+routes.get('/company/:company_id/returns/list', ReturnController.index);
 routes.delete(
   '/company/:company_id/point_sales/:point_sale_id',
   ResetSale.delete
 );
+
+routes.get('/search/sale/:sale_id', SearchSale.show);
+routes.get('/sale/:sale_id/itens/list', ItensList.show);
 
 /**
  * Rotas autenticadas com nível de acesso 1
@@ -252,5 +261,8 @@ routes.delete(
   ContractController.delete
 );
 routes.get('/skyjob/contracts/list', ContractController.index);
+
+routes.get('/search/users', Permission.index);
+routes.get('/permission', Permission.show);
 
 export default routes;
