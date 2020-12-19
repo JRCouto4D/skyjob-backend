@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import Sale from '../../models/Sale';
+import Pdv from '../../models/Point_sale';
 
 class Complete_sale {
   async update(req, res) {
@@ -30,6 +31,18 @@ class Complete_sale {
     const data = { ...req.body, complete_at: new Date() };
 
     const completedSale = await sale.update(data);
+
+    if (completedSale.id) {
+      const pdv = await Pdv.findByPk(completedSale.point_sale_id);
+
+      if (!pdv) {
+        return res.status(401).json({ error: 'PDV não encontrado.' });
+      }
+
+      pdv.flow_value = Number(pdv.flow_value) + completedSale.total;
+
+      pdv.save();
+    }
 
     return res.json(completedSale);
   }

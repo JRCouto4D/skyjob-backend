@@ -7,6 +7,7 @@ class Return extends Model {
         sale_id: Sequelize.INTEGER,
         point_sale_id: Sequelize.INTEGER,
         authorized_id: Sequelize.INTEGER,
+        company_id: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -27,6 +28,7 @@ class Return extends Model {
       foreignKey: 'authorized_id',
       as: 'authorized',
     });
+    this.belongsTo(models.Company, { foreignKey: 'company_id', as: 'company' });
   }
 }
 
