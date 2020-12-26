@@ -9,6 +9,7 @@ class Start_point_sale {
       user_id: Yup.number().required(),
       cash_register_id: Yup.number().required(),
       initial_value: Yup.number().required(),
+      company_id: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
