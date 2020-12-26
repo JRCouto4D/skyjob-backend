@@ -6,6 +6,7 @@ import Customer from '../../models/Customer';
 class Start_sale {
   async store(req, res) {
     const schema = Yup.object().shape({
+      company_id: Yup.number().required(),
       type_sale: Yup.number().required(),
       customer_id: Yup.number().when('type_sale', (type_sale, field) =>
         type_sale === 2 ? field.required() : field

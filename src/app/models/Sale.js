@@ -10,6 +10,7 @@ class Sale extends Model {
         total: Sequelize.DOUBLE,
         complete_at: Sequelize.DATE,
         canceled_at: Sequelize.DATE,
+        company_id: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -27,6 +28,10 @@ class Sale extends Model {
     this.belongsTo(models.Customer, {
       foreignKey: 'customer_id',
       as: 'customer',
+    });
+    this.belongsTo(models.Company, {
+      foreignKey: 'company_id',
+      as: 'company',
     });
   }
 }
