@@ -217,6 +217,7 @@ routes.put('/point_sales/:point_sale_id/close', Close_point_sale.update);
 routes.post('/point_sales/reinforcement', ReinforcementController.store);
 routes.post('/point_sales/bleed', BleedController.store);
 routes.get('/point_sales/:pdv_id', SearchPDV.index);
+routes.get('/company/:company_id/pdv/list', SearchPDV.show);
 
 routes.post('/point_sales/:point_sale_id/sale/start', StartSale.store);
 routes.put('/sale/:sale_id/complete', CompleteSale.update);

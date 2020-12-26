@@ -9,6 +9,7 @@ class Point_sale extends Model {
         final_value: Sequelize.DOUBLE,
         closed_at: Sequelize.DATE,
         active: Sequelize.BOOLEAN,
+        company_id: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -25,6 +26,7 @@ class Point_sale extends Model {
       foreignKey: 'cash_register_id',
       as: 'cash_register',
     });
+    this.belongsTo(models.Company, { foreignKey: 'company_id', as: 'company' });
   }
 }
 
