@@ -237,6 +237,7 @@ routes.delete(
 );
 
 routes.get('/search/sale/:sale_id', SearchSale.show);
+routes.get('/company/:company_id/sales/list', SearchSale.index);
 routes.get('/sale/:sale_id/itens/list', ItensList.show);
 routes.get('/sale/:sale_id/itens/:product_id/list', ItensList.index);
 
