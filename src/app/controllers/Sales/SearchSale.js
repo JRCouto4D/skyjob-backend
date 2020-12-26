@@ -27,6 +27,24 @@ class SearchSale {
 
     return res.json(sale);
   }
+
+  async index(req, res) {
+    const { company_id } = req.params;
+
+    const total = await Sale.count({
+      where: {
+        company_id,
+      },
+    });
+
+    const sales = await Sale.findAll({
+      where: {
+        company_id,
+      },
+    });
+
+    return res.json({ sales, total });
+  }
 }
 
 export default new SearchSale();

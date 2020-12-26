@@ -150,6 +150,7 @@ class ProductController {
         'minimum_wholesale',
         'minimum_stock',
         'active',
+        'amount_stock',
       ],
     });
 
