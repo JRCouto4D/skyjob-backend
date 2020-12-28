@@ -13,6 +13,7 @@ class Product extends Model {
         active: Sequelize.BOOLEAN,
         wholesale: Sequelize.BOOLEAN,
         amount_stock: Sequelize.INTEGER,
+        stock_moviment: Sequelize.BOOLEAN,
       },
       {
         sequelize,
