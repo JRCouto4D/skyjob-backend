@@ -23,9 +23,11 @@ class Reset_sales {
       response.map(async (item) => {
         const product = await Product.findByPk(item.product_id);
 
-        product.amount_stock += item.amount;
+        if (product.stock_moviment) {
+          product.amount_stock += item.amount;
 
-        await product.save();
+          await product.save();
+        }
       });
 
       await Item.destroy({
