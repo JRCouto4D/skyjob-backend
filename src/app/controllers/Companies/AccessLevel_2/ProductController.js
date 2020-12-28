@@ -216,6 +216,7 @@ class ProductController {
         'wholesale',
         'active',
         'amount_stock',
+        'stock_moviment',
       ],
       include: [
         {
