@@ -32,7 +32,11 @@ class RemoveItem {
       total: sale.total - item.total,
     });
 
-    await product.update({ amount_stock: product.amount_stock + item.amount });
+    if (product.stock_moviment) {
+      await product.update({
+        amount_stock: product.amount_stock + item.amount,
+      });
+    }
 
     await item.destroy();
 

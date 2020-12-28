@@ -73,9 +73,11 @@ class UpdateItem {
         await sale.save();
       }
 
-      await product.update({
-        amount_stock: product.amount_stock + item.amount - amount,
-      });
+      if (product.stock_moviment) {
+        await product.update({
+          amount_stock: product.amount_stock + item.amount - amount,
+        });
+      }
     }
 
     const dataItem = {
