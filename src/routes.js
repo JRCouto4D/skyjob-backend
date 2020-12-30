@@ -30,6 +30,7 @@ import ReversedInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/
 import ListInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/ListInvoice';
 import DeleteInvoice from './app/controllers/Companies/AccessLevel_2/Invoices/DeleteInvoice';
 import Permission from './app/controllers/Permission';
+import MovimentController from './app/controllers/MovimentController';
 
 /**
  * Controllers Point_sales
@@ -150,6 +151,7 @@ routes.delete(
 );
 routes.get('/company/:company_id/products', ProductController.index);
 routes.get('/company/:company_id/products/list', ProductController.show);
+routes.put('/moviment_stock/product/:product_id', MovimentController.update);
 
 /**
  * Invoices
