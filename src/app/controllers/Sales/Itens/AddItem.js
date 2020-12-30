@@ -70,8 +70,10 @@ class AddItem {
       }
     }
 
-    if (amount > product.amount_stock || product.amount_stock <= 0) {
-      return res.status(401).json({ error: 'Sem quantidade em estoque' });
+    if (product.stock_moviment) {
+      if (amount > product.amount_stock || product.amount_stock <= 0) {
+        return res.status(401).json({ error: 'Sem quantidade em estoque' });
+      }
     }
 
     const dataItem = {
@@ -105,7 +107,9 @@ class AddItem {
         await sale.save();
       }
 
-      await product.update({ amount_stock: product.amount_stock - amount });
+      if (product.stock_moviment) {
+        await product.update({ amount_stock: product.amount_stock - amount });
+      }
     }
 
     return res.json({

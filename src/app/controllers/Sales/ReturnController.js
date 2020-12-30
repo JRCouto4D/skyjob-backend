@@ -18,9 +18,11 @@ class Return_sale {
     async function updateStock(it) {
       const product = await Product.findByPk(it.product_id);
 
-      product.amount_stock += it.amount;
+      if (product.stock_moviment) {
+        product.amount_stock += it.amount;
 
-      await product.save();
+        await product.save();
+      }
     }
 
     if (!(await schema.isValid(req.body))) {

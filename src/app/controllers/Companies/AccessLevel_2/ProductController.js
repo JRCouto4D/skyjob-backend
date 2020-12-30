@@ -24,6 +24,7 @@ class ProductController {
         wholesale ? field.required() : field
       ),
       minimum_stock: Yup.number().required(),
+      stock_moviment: Yup.boolean().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -71,6 +72,7 @@ class ProductController {
       wholesale_sale: Yup.number(),
       minimum_wholesale: Yup.number(),
       minimum_stock: Yup.number(),
+      stock_moviment: Yup.boolean(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -216,6 +218,7 @@ class ProductController {
         'wholesale',
         'active',
         'amount_stock',
+        'stock_moviment',
       ],
       include: [
         {
