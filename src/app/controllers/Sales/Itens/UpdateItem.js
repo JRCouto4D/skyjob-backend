@@ -41,8 +41,10 @@ class UpdateItem {
     const { amount, discount } = req.body;
 
     if (amount) {
-      if (amount > product.amount_stock || product.amount_stock <= 0) {
-        return res.status(401).json({ error: 'Sem quantidade em estoque' });
+      if (product.stock_moviment) {
+        if (amount > product.amount_stock || product.amount_stock <= 0) {
+          return res.status(401).json({ error: 'Sem quantidade em estoque' });
+        }
       }
       if (sale.type_sale === 1) {
         const lowItem = sale.total - item.total;
