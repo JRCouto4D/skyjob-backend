@@ -258,6 +258,7 @@ routes.post('/skyjob/companies', CompanyControllerAdmin.store);
 routes.put('/skyjob/companies/:company_id', CompanyControllerAdmin.update);
 routes.delete('/skyjob/companies/:company_id', CompanyControllerAdmin.delete);
 routes.get('/skyjob/companies', CompanyControllerAdmin.index);
+routes.get('/skyjob/companies/list', CompanyControllerAdmin.show);
 
 routes.post('/skyjob/contracts/start', StartContract.store);
 routes.put('/skyjob/contracts/:contract_id/cancel', CancelContract.update);
