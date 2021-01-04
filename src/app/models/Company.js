@@ -9,8 +9,10 @@ class Company extends Model {
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
+        avatar_id: Sequelize.INTEGER,
         access: Sequelize.BOOLEAN,
         admin: Sequelize.BOOLEAN,
+        current_contract: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -33,6 +35,10 @@ class Company extends Model {
 
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.belongsTo(models.Contract, {
+      foreignKey: 'current_contract',
+      as: 'contract',
+    });
   }
 }
 
