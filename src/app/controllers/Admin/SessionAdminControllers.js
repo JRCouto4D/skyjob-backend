@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import jwt from 'jsonwebtoken';
 import Company from '../../models/Company';
+import File from '../../models/File';
 import authConfig from '../../../config/auth';
 
 class SessionController {
@@ -16,7 +17,16 @@ class SessionController {
 
     const { email, password } = req.body;
 
-    const company = await Company.findOne({ where: { email } });
+    const company = await Company.findOne({
+      where: { email },
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
 
     if (!company) {
       return res.status(401).json({ error: 'Usuário não registrado' });
@@ -30,20 +40,13 @@ class SessionController {
       return res.status(401).json({ error: 'Senha incorreta' });
     }
 
-    const { id, description, access, admin } = company;
-
-    if (!access) {
+    if (!company.access) {
       return res.status(401).json({ error: 'Acesso negado para esta empresa' });
     }
 
     return res.json({
-      user: {
-        id,
-        description,
-        email,
-        admin,
-      },
-      token: jwt.sign({ id }, authConfig.secret, {
+      user: company,
+      token: jwt.sign({ id: company.id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });

@@ -41,6 +41,11 @@ class StartContract {
       end_date: parseISO(end_date),
     });
 
+    if (contract.id) {
+      company.current_contract = contract.id;
+      await company.save();
+    }
+
     if (
       isAfter(new Date(), parseISO(start_date)) &&
       isBefore(new Date(), parseISO(end_date))
