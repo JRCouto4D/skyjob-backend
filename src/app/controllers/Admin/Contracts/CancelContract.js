@@ -17,11 +17,22 @@ class CancelContract {
       return res.status(401).json({ error: 'Contrato não encontrado' });
     }
 
+    const customer = await Company.findOne({
+      where: {
+        current_contract: contract.id,
+      },
+    });
+
+    if (customer) {
+      customer.access = false;
+      await customer.save();
+    }
+
     contract.status = false;
 
     await contract.save();
 
-    return res.json(contract);
+    return res.json({ contract, customer });
   }
 }
 

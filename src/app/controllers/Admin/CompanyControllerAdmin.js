@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Company from '../../models/Company';
 import User from '../../models/User';
 import File from '../../models/File';
+import Contract from '../../models/Contract';
 
 class CompanyControllers {
   async store(req, res) {
@@ -105,16 +107,26 @@ class CompanyControllers {
       return res.status(401).json({ error: 'Empresa não encontrada' });
     }
 
+    await User.destroy({ where: { company_id } });
+
+    if (company.avatar_id) {
+      await File.destroy({ where: { id: company.avatar_id } });
+    }
+
     await company.destroy();
 
     return res.send();
   }
 
   async index(req, res) {
-    const { pages = 1 } = req.query;
-    const total = await Company.count();
+    const { search = '' } = req.query;
 
     const company = await Company.findAll({
+      where: {
+        description: { [Op.iLike]: `${search}%` },
+        admin: false,
+        access: false,
+      },
       attributes: [
         'id',
         'description',
@@ -130,12 +142,49 @@ class CompanyControllers {
           attributes: ['name', 'path', 'url'],
         },
       ],
-      limit: 6,
-      offset: (pages - 1) * 6,
       order: ['description'],
     });
 
-    return res.json({ company, total });
+    return res.json(company);
+  }
+
+  async show(req, res) {
+    const { page = 1, search = '' } = req.query;
+
+    const total = await Company.count({
+      where: {
+        description: { [Op.iLike]: `${search}%` },
+        admin: false,
+      },
+    });
+
+    const companies = await Company.findAll({
+      where: {
+        description: { [Op.iLike]: `${search}%` },
+        admin: false,
+      },
+      attributes: ['id', 'description', 'email', 'access'],
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+        {
+          model: Contract,
+          as: 'contract',
+          attributes: ['id', 'start_date', 'end_date', 'status'],
+        },
+      ],
+      limit: 12,
+      offset: (page - 1) * 12,
+      order: [['description', 'ASC']],
+    });
+
+    return res.json({
+      companies,
+      total,
+    });
   }
 }
 
