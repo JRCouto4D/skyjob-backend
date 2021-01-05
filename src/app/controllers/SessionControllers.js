@@ -4,6 +4,7 @@ import User from '../models/User';
 import Company from '../models/Company';
 import File from '../models/File';
 import authConfig from '../../config/auth';
+import Contract from '../models/Contract';
 
 class SessionController {
   async store(req, res) {
@@ -25,6 +26,13 @@ class SessionController {
           model: Company,
           as: 'company',
           attributes: ['id', 'description', 'access'],
+          include: [
+            {
+              model: Contract,
+              as: 'contract',
+              attributes: ['id', 'start_date', 'end_date', 'status'],
+            },
+          ],
         },
         {
           model: File,

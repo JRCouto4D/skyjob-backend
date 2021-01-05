@@ -34,12 +34,14 @@ class SearchSale {
     const total = await Sale.count({
       where: {
         company_id,
+        canceled_at: null,
       },
     });
 
     const sales = await Sale.findAll({
       where: {
         company_id,
+        canceled_at: null,
       },
     });
 

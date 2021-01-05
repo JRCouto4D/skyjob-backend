@@ -176,8 +176,8 @@ class CompanyControllers {
           attributes: ['id', 'start_date', 'end_date', 'status'],
         },
       ],
-      limit: 12,
-      offset: (page - 1) * 12,
+      limit: 5,
+      offset: (page - 1) * 5,
       order: [['description', 'ASC']],
     });
 
